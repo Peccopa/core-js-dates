@@ -1,28 +1,15 @@
 /**
- * Returns true if a given date is within a specified range, including both the start and end dates.
+ * Returns the date formatted in 'M/D/YYYY, hh:mm:ss a'.
  *
- * @typedef {{
- * start: string, // The start date in ISO 8601 format (e.g., 'YYYY-MM-DD').
- * end: string    // The end date in ISO 8601 format.
- * }} DatePeriod
- *
- * @param {string} date - The date to check, in ISO 8601 format.
- * @param {DatePeriod} period - The period to check against.
- * @return {boolean} - True if the date is within the range, false otherwise.
+ * @param {string} date - The date to be formatted, in ISO 8601 format (e.g., 'YYYY-MM-DDTHH:mm:ss.sssZ').
+ * @return {string} - The date formatted in 'Month/Day/Year, Hour:Minute:Second AM/PM'.
  *
  * @example:
- * '2024-02-01', { start: '2024-02-02', end: '2024-03-02' } => false
- * '2024-02-02', { start: '2024-02-02', end: '2024-03-02' } => true
- * '2024-02-10', { start: '2024-02-02', end: '2024-03-02' } => true
+ * '2024-02-01T15:00:00.000Z' => '2/1/2024, 3:00:00 PM'
+ * '1999-01-05T02:20:00.000Z' => '1/5/1999, 2:20:00 AM'
+ * '2010-12-15T22:59:00.000Z' => '12/15/2010, 10:59:00 PM'
  */
-function isDateInPeriod(str, obj) {
-  const date = new Date(str).getTime();
-  const start = new Date(obj.start).getTime();
-  const end = new Date(obj.end).getTime();
-
-  return date >= start && date <= end;
+function formatDate(date) {
+  return new Date(date).toLocaleString('en-US', { timeZone: 'UTC' });
 }
-
-console.log(
-  isDateInPeriod('2024-02-10', { start: '2024-02-02', end: '2024-03-02' })
-);
+console.log(formatDate('2010-12-15T22:59:00.000Z'));
