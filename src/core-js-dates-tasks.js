@@ -71,8 +71,9 @@ function getDayName(date) {
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
 function getNextFriday(date) {
+  const MS_PER_DAY = 86_400_000;
   do {
-    date.setTime(date.getTime() + 86_400_000);
+    date.setTime(date.getTime() + MS_PER_DAY);
   } while (date.getDay() !== 5);
 
   return date;
@@ -187,7 +188,7 @@ function getCountWeekendsInMonth(month, year) {
  * Date(2024, 1, 23) => 8
  */
 function getWeekNumberByDate(date) {
-  const MS_PER_WEEK = 604800000;
+  const MS_PER_WEEK = 604_800_000;
   return Math.floor((date - new Date(date.getFullYear(), 0)) / MS_PER_WEEK) + 1;
 }
 
@@ -202,8 +203,12 @@ function getWeekNumberByDate(date) {
  * Date(2024, 0, 13) => Date(2024, 8, 13)
  * Date(2023, 1, 1) => Date(2023, 9, 13)
  */
-function getNextFridayThe13th(/* date */) {
-  throw new Error('Not implemented');
+function getNextFridayThe13th(date) {
+  let nextFriday;
+  do {
+    nextFriday = getNextFriday(date);
+  } while (nextFriday.getDate() !== 13);
+  return nextFriday;
 }
 
 /**
